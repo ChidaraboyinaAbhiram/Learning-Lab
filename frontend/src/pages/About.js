@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => (
     <div className="about-page" style={{ maxWidth: '800px', margin: '44px auto', padding: '30px', background: '#fff', borderRadius: '10px', boxShadow: '0 2px 12px rgba(36, 78, 104, 0.08)' }}>
-        <h1 style={{ color: '#27ae60', marginBottom: '22px' }}>About Lab Books</h1>
+        <h1 style={{ color: '#27ae60', marginBottom: '22px' }}>About Learning Lab</h1>
         <p style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '20px' }}>
             Lab Books is an interactive learning platform designed to help students and developers master programming concepts through hands-on experiments and quizzes. Each topic is broken into practical exercises based on real-world problems to reinforce your understanding and coding skills.
         </p>

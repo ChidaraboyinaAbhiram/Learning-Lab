@@ -32,7 +32,7 @@ const Home = () => {
     <div className="home">
       <div className="hero-section">
         <div className="hero-content">
-          <h1>Welcome to Lab Books</h1>
+          <h1>Welcome to Learning Lab</h1>
           <p>Learn programming through interactive experiments and hands-on coding</p>
           <div className="hero-search">
             <SearchBar onSearch={handleSearch} placeholder="Search experiments..." />
@@ -88,7 +88,7 @@ const Home = () => {
       </div>
 
       <div className="features-section">
-        <h2>Why Choose Lab Books?</h2>
+        <h2>Why Choose Learning Lab?</h2>
         <div className="features-grid">
           <div className="feature">
             <div className="feature-icon">💻</div>
