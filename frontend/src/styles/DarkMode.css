@@ -1,0 +1,326 @@
+/* ==================== DARK MODE STYLES ==================== */
+
+/* Base body dark mode */
+body.dark-mode {
+  background: #1a1a2e !important;
+  color: #eee !important;
+}
+
+/* Header in dark mode */
+body.dark-mode .header {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+body.dark-mode .header-container {
+  background: transparent;
+}
+
+/* Cards and containers */
+body.dark-mode .experiment-card,
+body.dark-mode .stat-card,
+body.dark-mode .completed-card,
+body.dark-mode .leaderboard-table,
+body.dark-mode .auth-card,
+body.dark-mode .sub-experiment {
+  background: #2d3748;
+  color: #eee;
+  border-color: #4a5568;
+}
+
+body.dark-mode .experiment-card:hover,
+body.dark-mode .completed-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+/* Table styles */
+body.dark-mode .table-row {
+  border-bottom: 1px solid #4a5568;
+  color: #eee;
+}
+
+body.dark-mode .table-row:hover {
+  background: #4a5568;
+}
+
+body.dark-mode .table-header {
+  background: #4a5568;
+  color: #eee;
+  border-bottom: 2px solid #2d3748;
+}
+
+/* Input fields and form elements */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #2d3748;
+  color: #eee;
+  border-color: #4a5568;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #a0aec0;
+}
+
+/* Code blocks */
+body.dark-mode pre {
+  background: #1a1a2e !important;
+  color: #a8dadc !important;
+  border: 1px solid #4a5568;
+}
+
+/* Quiz sections */
+body.dark-mode .quiz-options {
+  background: #2d3748;
+  border-color: #4a5568;
+}
+
+body.dark-mode .quiz-option-label {
+  background: #2d3748;
+  color: #eee;
+  border-color: #4a5568;
+}
+
+body.dark-mode .quiz-option-label:hover {
+  background: #4a5568;
+  border-color: #667eea;
+}
+
+body.dark-mode .quiz-results {
+  background: #2d3748;
+  color: #eee;
+}
+
+/* Sidebar */
+body.dark-mode .sidebar {
+  background: #2d3748;
+  border-right: 1px solid #4a5568;
+}
+
+body.dark-mode .sidebar-link {
+  color: #cbd5e0;
+}
+
+body.dark-mode .sidebar-link:hover,
+body.dark-mode .sidebar-link.active {
+  background: #4a5568;
+  color: #fff;
+}
+
+body.dark-mode .sub-experiment-link {
+  color: #a0aec0;
+}
+
+body.dark-mode .sub-experiment-link:hover {
+  background: rgba(52, 73, 94, 0.5);
+  color: #fff;
+}
+
+/* Hero and profile sections */
+body.dark-mode .profile-header {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+body.dark-mode .my-rank-card {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+body.dark-mode .hero-section {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+/* UNIVERSAL TEXT FIXES - Works for ALL pages */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #f7fafc !important;
+}
+
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode span:not(.experiment-number):not(.difficulty),
+body.dark-mode label,
+body.dark-mode div {
+  color: #e2e8f0 !important;
+}
+
+body.dark-mode .card-title {
+  color: #f7fafc !important;
+}
+
+body.dark-mode .card-description {
+  color: #cbd5e0 !important;
+}
+
+body.dark-mode .card-stats {
+  color: #a0aec0 !important;
+}
+
+/* Links */
+body.dark-mode a:not(.nav-link):not(.sidebar-link):not(.sub-experiment-link) {
+  color: #90cdf4;
+}
+
+body.dark-mode a:not(.nav-link):not(.sidebar-link):not(.sub-experiment-link):hover {
+  color: #bee3f8;
+}
+
+/* Footer */
+body.dark-mode .footer {
+  background: #2d3748;
+  border-top: 1px solid #4a5568;
+  color: #e2e8f0;
+}
+
+body.dark-mode .footer-section h4 {
+  color: #90cdf4;
+}
+
+body.dark-mode .footer-section ul li a {
+  color: #cbd5e0;
+}
+
+body.dark-mode .footer-section ul li a:hover {
+  color: #fff;
+}
+
+body.dark-mode .footer-bottom {
+  color: #90b6de !important;
+}
+
+/* Buttons */
+body.dark-mode .btn-primary {
+  background: #667eea;
+  color: #fff;
+}
+
+body.dark-mode .btn-primary:hover {
+  background: #5a67d8;
+}
+
+body.dark-mode .start-quiz-btn,
+body.dark-mode .quiz-submit-btn,
+body.dark-mode .copy-btn,
+body.dark-mode .complete-btn {
+  background: #48bb78;
+  color: #fff;
+}
+
+body.dark-mode .start-quiz-btn:hover,
+body.dark-mode .quiz-submit-btn:hover,
+body.dark-mode .copy-btn:hover,
+body.dark-mode .complete-btn:hover {
+  background: #38a169;
+}
+
+/* Difficulty badges */
+body.dark-mode .difficulty.beginner {
+  background: #2f855a;
+  color: #fff !important;
+}
+
+body.dark-mode .difficulty.intermediate {
+  background: #d69e2e;
+  color: #fff !important;
+}
+
+body.dark-mode .difficulty.advanced {
+  background: #c53030;
+  color: #fff !important;
+}
+
+/* Main content area */
+body.dark-mode .main-content {
+  background-color: #1a1a2e !important;
+}
+
+body.dark-mode .experiment-page {
+  color: #e2e8f0 !important;
+}
+
+/* Search bar */
+body.dark-mode .search-input {
+  background: #2d3748;
+  color: #eee;
+  border: 1px solid #4a5568;
+}
+
+body.dark-mode .search-input::placeholder {
+  color: #a0aec0;
+}
+
+/* Loading and empty states */
+body.dark-mode .loading,
+body.dark-mode .error,
+body.dark-mode .empty-state {
+  color: #cbd5e0 !important;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.1);
+  transform: scale(1.1);
+}
+
+/* Auth section in header */
+.user-info {
+  color: white !important;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.user-info:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Profile page */
+body.dark-mode .profile-page {
+  background: #1a1a2e;
+  color: #e2e8f0;
+}
+
+body.dark-mode .profile-page h2 {
+  color: #f7fafc !important;
+}
+
+/* Universal page content containers */
+body.dark-mode main,
+body.dark-mode article,
+body.dark-mode section {
+  background: #1a1a2e !important;
+  color: #e2e8f0 !important;
+}
+
+/* About page dark mode */
+body.dark-mode .about-content {
+  background: #2d3748 !important;
+}
+
+body.dark-mode .about-content h1,
+body.dark-mode .about-content h2 {
+  color: #48bb78 !important;
+}
+
+body.dark-mode .about-intro,
+body.dark-mode .about-list,
+body.dark-mode .about-list li,
+body.dark-mode .about-mission {
+  color: #e2e8f0 !important;
+}

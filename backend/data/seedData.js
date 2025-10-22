@@ -1,31 +1,33 @@
-const mongoose = require('mongoose');
-const Experiment = require('../models/Experiment');
-const experiments = require('./experiments'); // Correct path
+import 'dotenv/config';
+import mongoose from 'mongoose';
+import Experiment from './models/Experiment.js';
+import experimentsData from './data/experiments.js';
 
-require('dotenv').config();
+// Connect to MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('✅ Connected to MongoDB Atlas');
+    seedDatabase();
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1);
+  });
 
-const seedDatabase = async () => {
+async function seedDatabase() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/labbooks', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('Connected to MongoDB');
+    const deleted = await Experiment.deleteMany({});
+    console.log(`🗑️  Cleared ${deleted.deletedCount} existing experiments`);
 
-    // Remove existing
-    await Experiment.deleteMany({});
-    console.log('Old experiments removed');
+    const inserted = await Experiment.insertMany(experimentsData);
+    console.log(`✅ Inserted ${inserted.length} experiments`);
 
-    // Insert all with nested data
-    await Experiment.insertMany(experiments);
-    console.log(`Inserted ${experiments.length} experiments`);
-
+    mongoose.connection.close();
+    console.log('👍 Database seeding complete!');
     process.exit(0);
-  } catch (err) {
-    console.error('Error seeding experiments:', err);
+  } catch (error) {
+    console.error('❌ Error seeding database:', error);
+    mongoose.connection.close();
     process.exit(1);
   }
-};
-
-// Only run if directly called
-if (require.main === module) seedDatabase();
+}

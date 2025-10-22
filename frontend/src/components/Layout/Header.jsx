@@ -1,46 +1,55 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import SearchBar from '../Search/SearchBar';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import {useTheme} from '../../context/ThemeContext';
 
-const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+function Header() {
+  const { user, logout, isAuthenticated } = useAuth();
+  const {darkMode, toggleDarkMode} = useTheme();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <header className="header">
-      <div className="header-container">
-        <div className="header-left">
-          <Link to="/" className="logo">
-            <span className="logo-text">Learning Lab</span>
-          </Link>
-        </div>
+      <div className="header-content">
+        <Link to="/" className="logo">
+          Learning Lab
+        </Link>
         
-        <div className="header-center">
-          <SearchBar />
-        </div>
-        
-        <div className="header-right">
-          <nav className="nav-menu">
-            <Link to="/" className="nav-link">Home</Link>
-            <Link to="/about" className="nav-link">About</Link>
-          </nav>
-          
-          <button 
-            className="mobile-menu-btn"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            ☰
+        <nav className="nav-menu">
+          <Link to="/">Home</Link>
+          <Link to="/leaderboard">Leaderboard</Link>
+          <Link to="/about">About</Link>
+          <Link to="/profile">Profile</Link>
+        </nav>
+
+        <div className="auth-section">
+          <button onClick={toggleDarkMode} className="theme-toggle-btn">
+            {darkMode ? '🌞' : '🌙 '}
           </button>
+          {isAuthenticated ? (
+            <>
+              <span className="user-info" onClick={() => navigate('/profile')}>
+                👤 {user?.username} • {user?.points} pts
+              </span>
+              <button onClick={handleLogout} className="logout-btn">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="login-link">Login</Link>
+              <Link to="/register" className="register-btn">Register</Link>
+            </>
+          )}
         </div>
       </div>
-      
-      {isMobileMenuOpen && (
-        <div className="mobile-menu">
-          <Link to="/" className="mobile-nav-link">Home</Link>
-          <Link to="/about" className="mobile-nav-link">About</Link>
-        </div>
-      )}
     </header>
   );
-};
+}
 
 export default Header;

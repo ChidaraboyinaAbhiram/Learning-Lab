@@ -1226,4 +1226,4 @@ export const experiments = [
     }
 ];
 
-module.exports = experiments;
+export default experiments;

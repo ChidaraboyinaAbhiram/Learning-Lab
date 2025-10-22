@@ -65,6 +65,7 @@ const ExperimentPage = () => {
               <QuizComponent
                 quiz={sub.quiz}
                 onPass={() => setUnlocked(prev => ({ ...prev, [idx]: true }))}
+                experimentId={experiment._id}   // <-- Pass experiment._id here!
               />
             )
           )}
