@@ -82,7 +82,7 @@ app.listen(PORT, () => {
   console.log(`📖 Learning Lab API: http://localhost:${PORT}/api`);
 });
 
-const cors = require('cors');
+
 
 app.use(cors({
   origin: [
