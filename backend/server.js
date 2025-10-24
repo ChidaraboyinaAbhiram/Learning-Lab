@@ -81,3 +81,15 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📖 Learning Lab API: http://localhost:${PORT}/api`);
 });
+
+const cors = require('cors');
+
+app.use(cors({
+  origin: [
+    'http://localhost:3000',  // For local development
+    'https://learning-lab-seven.vercel.app',  // Your Vercel domain
+    'https://*.vercel.app'  // All Vercel preview deployments
+  ],
+  credentials: true
+}));
+
