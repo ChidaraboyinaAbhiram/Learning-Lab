@@ -8,7 +8,7 @@ require('dotenv').config();
 const experimentRoutes = require('./routes/experiments');
 const quizRoutes = require('./routes/quizzes');
 const authRoutes = require('./routes/auth');
-const progressRoutes = require('./routes/progress'); // ADD THIS
+const progressRoutes = require('./routes/progress');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,7 +32,27 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api/experiments', experimentRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/progress', progressRoutes); // ADD THIS
+app.use('/api/progress', progressRoutes);
+
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to the Learning Lab API',
+    endpoints: {
+      experiments: '/api/experiments',
+      health: '/api/health'
+    }
+  });
+});
+
+app.get('/api/experiments', async (req, res) => {
+  try {
+    const experiments = await Experiment.find();
+    res.json(experiments);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
