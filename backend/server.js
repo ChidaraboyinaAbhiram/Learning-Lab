@@ -90,7 +90,8 @@ app.use(cors({
   origin: [
     'http://localhost:3000',  // For local development
     'https://learning-lab-seven.vercel.app',  // Your Vercel domain
-    'https://*.vercel.app'  // All Vercel preview deployments
+    'https://*.vercel.app',  // All Vercel preview deployments
+     'https://learning-q5wa9xiy6-chidaraboyinaabhirams-projects.vercel.app'
   ],
   credentials: true
 }));
