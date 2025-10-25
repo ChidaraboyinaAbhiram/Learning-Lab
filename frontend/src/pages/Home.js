@@ -9,19 +9,19 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+    const fetchExperiments = async () => {
+      try {
+        const response = await getAllExperiments(searchTerm);
+        setExperiments(response.experiments);
+      } catch (error) {
+        console.error('Error fetching experiments:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
     fetchExperiments();
   }, [searchTerm]);
-
-  const fetchExperiments = async () => {
-    try {
-      const response = await getAllExperiments(searchTerm);
-      setExperiments(response.experiments);
-    } catch (error) {
-      console.error('Error fetching experiments:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -60,7 +60,7 @@ const Home = () => {
               <div key={experiment._id} className="experiment-card">
                 <div className="card-header">
                   <span className="experiment-number">Experiment {experiment.exNo}</span>
-                  <span className={`difficulty ${experiment.difficulty?.toLowerCase()}`}>
+                  <span className={`difficulty ${experiment.difficulty?.toLowerCase() || 'beginner'}`}>
                     {experiment.difficulty || 'Beginner'}
                   </span>
                 </div>
