@@ -3,6 +3,9 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+// Move API_URL outside the component to avoid dependency warning
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -15,8 +18,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
-
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
   // Check if user is logged in on mount
   useEffect(() => {
@@ -92,7 +93,7 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
   // NEW: Mark experiment as completed
   const markExperimentComplete = async (experimentId) => {
     if (!token) return { success: false, error: 'Not authenticated' };
-
+    
     try {
       const response = await axios.post(
         `${API_URL}/progress/complete`,
