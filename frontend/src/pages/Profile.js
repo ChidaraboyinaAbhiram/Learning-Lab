@@ -5,13 +5,14 @@ import axios from 'axios';
 import '../styles/Profile.css';
 
 function Profile() {
-  const { user, token } = useAuth();
+  const { token } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
       if (!token) return;
+      
       try {
         const res = await axios.get('http://localhost:5000/api/profile', {
           headers: { Authorization: `Bearer ${token}` }
@@ -23,6 +24,7 @@ function Profile() {
         setLoading(false);
       }
     };
+    
     fetchProfile();
   }, [token]);
 
@@ -36,7 +38,7 @@ function Profile() {
           {profile.username.charAt(0).toUpperCase()}
         </div>
         <div className="profile-info">
-          <h1>{profile.username}</h1>
+          <h2>{profile.username}</h2>
           <p className="email">{profile.email}</p>
           <p className="joined">
             Joined {new Date(profile.joinedAt).toLocaleDateString()}
@@ -64,7 +66,7 @@ function Profile() {
       </div>
 
       <div className="completed-section">
-        <h2>📚 Completed Experiments</h2>
+        <h3>📚 Completed Experiments</h3>
         {profile.completedExperiments.length === 0 ? (
           <p className="empty-state">No experiments completed yet. Start learning!</p>
         ) : (
@@ -76,8 +78,8 @@ function Profile() {
                 className="completed-card"
               >
                 <div className="completed-badge">✓</div>
-                <h3>{exp.title}</h3>
-                <span className={`difficulty ${exp.difficulty?.toLowerCase()}`}>
+                <h4>{exp.title}</h4>
+                <span className={`difficulty ${exp.difficulty?.toLowerCase() || 'beginner'}`}>
                   {exp.difficulty || 'Beginner'}
                 </span>
               </Link>
