@@ -19,14 +19,14 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
   // Configure axios defaults for credentials
   axios.defaults.withCredentials = true;
 
-=======
->>>>>>> 2fc1a650720f07adfa88392a46f01c3f9642b056
+// =======
+// >>>>>>> 2fc1a650720f07adfa88392a46f01c3f9642b056
   // Check if user is logged in on mount
   useEffect(() => {
     const checkAuth = async () => {

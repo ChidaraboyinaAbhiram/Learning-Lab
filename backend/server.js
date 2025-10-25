@@ -17,23 +17,23 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 app.use(morgan('combined'));
 
-// ✅ FIXED: Single CORS configuration with all allowed origins
+// ✅ FIXED: Updated CORS configuration with all your deployment URLs
 app.use(cors({
   origin: [
     'http://localhost:3000',  // For local development
-    'https://learning-lab-seven.vercel.app',  // Your Vercel domain
-    'https://learning-q5wa9xiy6-chidaraboyinaabhirams-projects.vercel.app'  // Current Vercel deployment
-    // /https:\/\/.*\.vercel\.app$/  // All Vercel preview deployments (using regex)
+    'https://learning-lab-seven.vercel.app',  // Your main Vercel domain
+    'https://learning-lab-git-main-chidaraboyinaabhirams-projects.vercel.app',  // Current main deployment
+    'https://learning-q5wa9xiy6-chidaraboyinaabhirams-projects.vercel.app',  // Previous deployment
+    /^https:\/\/learning-.*\.vercel\.app$/  // All Vercel preview deployments (using regex)
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 204
 }));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
-
-// ❌ REMOVED: app.use(cors()); - This was overriding the previous CORS config
 
 // Database connection
 mongoose.connect(process.env.MONGO_URI)
@@ -92,5 +92,3 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📖 Learning Lab API: http://localhost:${PORT}/api`);
 });
-
-// ❌ REMOVED: The CORS config at the bottom - it was never executed because it's after app.listen()
