@@ -22,8 +22,8 @@ app.use(cors({
   origin: [
     'http://localhost:3000',  // For local development
     'https://learning-lab-seven.vercel.app',  // Your Vercel domain
-    'https://learning-q5wa9xiy6-chidaraboyinaabhirams-projects.vercel.app',  // Current Vercel deployment
-    /https:\/\/.*\.vercel\.app$/  // All Vercel preview deployments (using regex)
+    'https://learning-q5wa9xiy6-chidaraboyinaabhirams-projects.vercel.app'  // Current Vercel deployment
+    // /https:\/\/.*\.vercel\.app$/  // All Vercel preview deployments (using regex)
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],

@@ -16,7 +16,10 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
+  // Configure axios defaults for credentials
+  axios.defaults.withCredentials = true;
 
   // Check if user is logged in on mount
   useEffect(() => {
@@ -25,7 +28,8 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
       if (storedToken) {
         try {
           const response = await axios.get(`${API_URL}/auth/me`, {
-            headers: { Authorization: `Bearer ${storedToken}` }
+            headers: { Authorization: `Bearer ${storedToken}` },
+            withCredentials: true
           });
           setUser(response.data.user);
           setToken(storedToken);
@@ -37,11 +41,20 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
       setLoading(false);
     };
     checkAuth();
-  }, []);
+  }, [API_URL]);
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+      const response = await axios.post(
+        `${API_URL}/auth/login`, 
+        { email, password },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -59,8 +72,17 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
   const register = async (username, email, password) => {
     try {
-      await axios.post(`${API_URL}/auth/register`, { username, email, password });
-      return { success: true };
+      const response = await axios.post(
+        `${API_URL}/auth/register`, 
+        { username, email, password },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      return { success: true, data: response.data };
     } catch (error) {
       return { 
         success: false, 
@@ -80,7 +102,8 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
     if (token) {
       try {
         const response = await axios.get(`${API_URL}/auth/me`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
         });
         setUser(response.data.user);
       } catch (error) {
@@ -97,7 +120,10 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
       const response = await axios.post(
         `${API_URL}/progress/complete`,
         { experimentId },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { 
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        }
       );
       
       await refreshUser(); // Refresh user to get updated points
