@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
-const QuizComponent = ({ quiz, onPass, experimentId }) => {
+const QuizComponent = ({ quiz, experimentId }) => {
   const [userAnswers, setUserAnswers] = useState(Array(quiz.length).fill(null));
   const [showResults, setShowResults] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -14,55 +14,71 @@ const QuizComponent = ({ quiz, onPass, experimentId }) => {
     setUserAnswers(answers);
   };
 
+  const handleSubmit = () => setShowResults(true);
+
   const handleMarkComplete = async () => {
     if (!isAuthenticated) {
       alert('Please login to track progress');
       return;
     }
-
     if (!experimentId) {
       alert('Experiment ID not found');
       return;
     }
-
     const result = await markExperimentComplete(experimentId);
     if (result.success) {
       setIsCompleted(true);
       await refreshUser();
       alert(`🎉 Experiment completed! +10 points! Total: ${result.data.points} pts`);
-      console.log(`🎉 Experiment completed! +10 points! Total: ${result.data.points} pts`);
     } else {
       alert(result.error || 'Failed to mark as complete');
-      console.log(result.error || 'Failed to mark as complete');
     }
   };
 
+  const correct = quiz.filter((q, i) => userAnswers[i] === q.answer).length;
+
   return (
     <div className="quiz-container">
-      {/* Render quiz as before */}
-      {quiz.map((q, idx) => (
-        <div className='quiz-options' key={idx}>
-          <strong>{q.question}</strong>
-          {q.options.map((opt, i) => (
-            <label className="quiz-option-label" key={i}>
-              <input
-                type="radio"
-                checked={userAnswers[idx] === i}
-                onChange={() => handleAnswer(idx, i)}
-              />
-              {opt}
-            </label>
+      {!showResults && (
+        <>
+          {quiz.map((q, idx) => (
+            <div className='quiz-options' key={idx}>
+              <strong>{q.question}</strong>
+              {q.options.map((opt, i) => (
+                <label className="quiz-option-label" key={i}>
+                  <input
+                    type="radio"
+                    checked={userAnswers[idx] === i}
+                    onChange={() => handleAnswer(idx, i)}
+                  />
+                  {opt}
+                </label>
+              ))}
+            </div>
           ))}
+          <button className='quiz-submit-btn' onClick={handleSubmit}>Submit Quiz</button>
+        </>
+      )}
+
+      {/* RESULT always visible if submitted */}
+      {showResults && (
+        <div className="quiz-results">
+          <h3>Result: {correct} out of {quiz.length} correct</h3>
+          <p>{correct >= Math.ceil(quiz.length * 0.6)
+            ? '✅ You passed! Now see the experiment code below:'
+            : '❌ Try again for more practice.'
+          }</p>
         </div>
-      ))}
-      {/* Mark as Complete BUTTON ALWAYS VISIBLE! */}
+      )}
+
+      {/* Always show the Mark as Complete Button below the results */}
       {isAuthenticated && !!experimentId && !isCompleted && (
-        <button onClick={handleMarkComplete} className="complete-btn">
+        <button onClick={handleMarkComplete} className="complete-btn" style={{marginTop: '16px'}}>
           ✓ Mark as Complete & Earn 10 Points
         </button>
       )}
       {isCompleted && (
-        <p className="completed-message">✅ Already completed!</p>
+        <p className="completed-message" style={{marginTop: '16px'}}>✅ Already completed!</p>
       )}
     </div>
   );
