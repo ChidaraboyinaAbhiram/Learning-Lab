@@ -1,4 +1,6 @@
 import axios from 'axios';
+const { token } = useAuth();
+
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
@@ -42,6 +44,7 @@ export const getAllExperiments = (search = '', page = 1, limit = 20) => {
   params.append('limit', limit.toString());
   
   return api.get(`/experiments?${params}`);
+  headers: { Authorization: `Bearer ${token}` }
 };
 
 export const getExperimentById = (id) => {
