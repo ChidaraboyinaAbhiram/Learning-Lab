@@ -19,14 +19,12 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-// <<<<<<< HEAD
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  // REMOVE this duplicate:
+  // const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
   // Configure axios defaults for credentials
   axios.defaults.withCredentials = true;
 
-// =======
-// >>>>>>> 2fc1a650720f07adfa88392a46f01c3f9642b056
   // Check if user is logged in on mount
   useEffect(() => {
     const checkAuth = async () => {
@@ -47,12 +45,12 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     };
     checkAuth();
-  }, [API_URL]);
+  }, []);
 
   const login = async (email, password) => {
     try {
       const response = await axios.post(
-        `${API_URL}/auth/login`, 
+        `${API_URL}/auth/login`,
         { email, password },
         {
           withCredentials: true,
@@ -62,16 +60,14 @@ export const AuthProvider = ({ children }) => {
         }
       );
       const { token, user } = response.data;
-      
       localStorage.setItem('token', token);
       setToken(token);
       setUser(user);
-      
       return { success: true };
     } catch (error) {
-      return { 
-        success: false, 
-        error: error.response?.data?.error || 'Login failed' 
+      return {
+        success: false,
+        error: error.response?.data?.error || 'Login failed'
       };
     }
   };
@@ -79,7 +75,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (username, email, password) => {
     try {
       const response = await axios.post(
-        `${API_URL}/auth/register`, 
+        `${API_URL}/auth/register`,
         { username, email, password },
         {
           withCredentials: true,
@@ -90,9 +86,9 @@ export const AuthProvider = ({ children }) => {
       );
       return { success: true, data: response.data };
     } catch (error) {
-      return { 
-        success: false, 
-        error: error.response?.data?.error || 'Registration failed' 
+      return {
+        success: false,
+        error: error.response?.data?.error || 'Registration failed'
       };
     }
   };
@@ -120,27 +116,37 @@ export const AuthProvider = ({ children }) => {
 
   // NEW: Mark experiment as completed
   const markExperimentComplete = async (experimentId) => {
-    if (!token) return { success: false, error: 'Not authenticated' };
-    
+    if (!token) {
+      console.log('❌ No token available');
+      return { success: false, error: 'Not authenticated' };
+    }
+
+    console.log('🔄 Marking experiment complete:', experimentId);
+    console.log('🔗 API URL:', API_URL);
+    console.log('🔑 Token (first 20 chars):', token.substring(0, 20) + '...');
+
     try {
       const response = await axios.post(
         `${API_URL}/progress/complete`,
         { experimentId },
-        { 
+        {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true
         }
       );
-      
-      await refreshUser(); // Refresh user to get updated points
+
+      console.log('✅ Response:', response.data);
+      await refreshUser();
       return { success: true, data: response.data };
     } catch (error) {
+      console.error('❌ Mark complete error:', error.response?.data || error.message);
       return {
         success: false,
         error: error.response?.data?.error || 'Failed to mark as complete'
       };
     }
   };
+
 
   const value = {
     user,

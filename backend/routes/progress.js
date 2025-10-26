@@ -23,20 +23,38 @@ const authMiddleware = (req, res, next) => {
 router.post('/complete', authMiddleware, async (req, res) => {
   try {
     const { experimentId } = req.body;
+
+    // ADD DEBUGGING
+    console.log('📊 Progress Complete Request:');
+    console.log('  User ID:', req.userId);
+    console.log('  Experiment ID:', experimentId);
+
     const user = await User.findById(req.userId);
-    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    if (!user) {
+      console.log('❌ User not found:', req.userId);
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    console.log('✅ User found:', user.username, 'Current points:', user.points);
 
     if (user.completedExperiments.includes(experimentId)) {
+      console.log('⚠️ Already completed');
       return res.json({ message: 'Already completed', points: user.points });
     }
 
     user.completedExperiments.push(experimentId);
     user.points += 10;
     await user.save();
+
+    console.log('🎉 Points added! New points:', user.points);
+
     res.json({ message: 'Experiment completed!', points: user.points });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update progress' });
+    console.error('❌ Error in complete route:', error);
+    res.status(500).json({ error: 'Failed to update progress', details: error.message });
   }
 });
+
 
 module.exports = router;
