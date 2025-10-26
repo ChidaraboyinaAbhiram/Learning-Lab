@@ -7,8 +7,6 @@ const ExperimentPage = () => {
   const { id } = useParams();
   const [experiment, setExperiment] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [unlocked, setUnlocked] = useState({});
-  const [quizStarted, setQuizStarted] = useState({});
   const [copied, setCopied] = useState({});
 
   useEffect(() => {
@@ -53,34 +51,26 @@ const ExperimentPage = () => {
         <div key={idx} className="sub-experiment">
           <h3>{sub.title}</h3>
           <p>{sub.description}</p>
-          {!!sub.quiz && !unlocked[idx] && (
-            !quizStarted[idx] ? (
-              <button
-                className="start-quiz-btn"
-                onClick={() => setQuizStarted(prev => ({ ...prev, [idx]: true }))}
-              >
-                Start Quiz
-              </button>
-            ) : (
-              <QuizComponent
-                quiz={sub.quiz}
-                onPass={() => setUnlocked(prev => ({ ...prev, [idx]: true }))}
-                experimentId={experiment._id}   // <-- Pass experiment._id here!
-              />
-            )
+          
+          {/* Always show the QuizComponent */}
+          {sub.quiz && (
+            <QuizComponent
+              quiz={sub.quiz}
+              experimentId={experiment._id}
+            />
           )}
-          {(!sub.quiz || unlocked[idx]) && (
-            <div style={{ position: 'relative' }}>
-              <pre>{sub.code}</pre>
-              <button
-                className="copy-btn"
-                style={{ position: 'absolute', top: 8, right: 15 }}
-                onClick={() => handleCopy(sub.code, idx)}
-              >
-                {copied[idx] ? "Copied!" : "Copy"}
-              </button>
-            </div>
-          )}
+
+          {/* Show code block always */}
+          <div style={{ position: 'relative' }}>
+            <pre>{sub.code}</pre>
+            <button
+              className="copy-btn"
+              style={{ position: 'absolute', top: 8, right: 15 }}
+              onClick={() => handleCopy(sub.code, idx)}
+            >
+              {copied[idx] ? "Copied!" : "Copy"}
+            </button>
+          </div>
         </div>
       ))}
     </div>
