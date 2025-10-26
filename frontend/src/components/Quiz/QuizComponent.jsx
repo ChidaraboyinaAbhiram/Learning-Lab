@@ -60,7 +60,6 @@ const QuizComponent = ({ quiz, experimentId }) => {
         </>
       )}
 
-      {/* RESULT always visible if submitted */}
       {showResults && (
         <div className="quiz-results">
           <h3>Result: {correct} out of {quiz.length} correct</h3>
@@ -71,7 +70,7 @@ const QuizComponent = ({ quiz, experimentId }) => {
         </div>
       )}
 
-      {/* Always show the Mark as Complete Button below the results */}
+      {/* Button is ALWAYS visible! */}
       {isAuthenticated && !!experimentId && !isCompleted && (
         <button onClick={handleMarkComplete} className="complete-btn" style={{marginTop: '16px'}}>
           ✓ Mark as Complete & Earn 10 Points
