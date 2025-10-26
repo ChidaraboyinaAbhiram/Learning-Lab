@@ -14,14 +14,6 @@ const QuizComponent = ({ quiz, onPass, experimentId }) => {
     setUserAnswers(answers);
   };
 
-  const handleSubmit = () => {
-    setShowResults(true);
-    const correct = quiz.filter((q, i) => userAnswers[i] === q.answer).length;
-    if (correct >= Math.ceil(quiz.length * 0.6)) { // 60% required
-      onPass();
-    }
-  };
-
   const handleMarkComplete = async () => {
     if (!isAuthenticated) {
       alert('Please login to track progress');
@@ -45,45 +37,9 @@ const QuizComponent = ({ quiz, onPass, experimentId }) => {
     }
   };
 
-  if (showResults) {
-    const correct = quiz.filter((q, i) => userAnswers[i] === q.answer).length;
-    const passed = correct >= Math.ceil(quiz.length * 0.6);
-
-    // DIAGNOSTIC LOGS
-    console.log('Show Mark Complete button?', {
-      isAuthenticated,
-      experimentId,
-      isCompleted,
-      passed,
-    });
-
-    return (
-      <div className="quiz-results">
-        <h3>Result: {correct} out of {quiz.length} correct</h3>
-        {passed ? (
-          <>
-            <p>✅ You passed! Now see the experiment code below:</p>
-
-            {/* Mark as Complete Button */}
-            {isAuthenticated && !!experimentId && !isCompleted && (
-              <button onClick={handleMarkComplete} className="complete-btn">
-                ✓ Mark as Complete & Earn 10 Points
-              </button>
-            )}
-
-            {isCompleted && (
-              <p className="completed-message">✅ Already completed!</p>
-            )}
-          </>
-        ) : (
-          <p>❌ Try again for more practice.</p>
-        )}
-      </div>
-    );
-  }
-
   return (
     <div className="quiz-container">
+      {/* Render quiz as before */}
       {quiz.map((q, idx) => (
         <div className='quiz-options' key={idx}>
           <strong>{q.question}</strong>
@@ -99,7 +55,15 @@ const QuizComponent = ({ quiz, onPass, experimentId }) => {
           ))}
         </div>
       ))}
-      <button className='quiz-submit-btn' onClick={handleSubmit}>Submit Quiz</button>
+      {/* Mark as Complete BUTTON ALWAYS VISIBLE! */}
+      {isAuthenticated && !!experimentId && !isCompleted && (
+        <button onClick={handleMarkComplete} className="complete-btn">
+          ✓ Mark as Complete & Earn 10 Points
+        </button>
+      )}
+      {isCompleted && (
+        <p className="completed-message">✅ Already completed!</p>
+      )}
     </div>
   );
 };
