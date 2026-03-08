@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
-import Experiment from './models/Experiment.js';
-import experimentsData from './data/experiments.js';
+import Experiment from '../models/Experiment.js';
+import experimentsData from './experiments.js';
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)

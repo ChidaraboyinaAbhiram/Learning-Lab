@@ -9,6 +9,7 @@ const experimentRoutes = require('./routes/experiments');
 const quizRoutes = require('./routes/quizzes');
 const authRoutes = require('./routes/auth');
 const progressRoutes = require('./routes/progress');
+const leaderboardRoutes = require('./routes/leaderboard');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -45,6 +46,7 @@ app.use('/api/experiments', experimentRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/leaderboard', leaderboardRoutes);
 
 app.get('/', (req, res) => {
   res.json({

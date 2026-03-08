@@ -1,21 +1,26 @@
 import axios from 'axios';
-const { token } = useAuth();
-
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 const api = axios.create({
-baseURL: API_URL,
+  baseURL: API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Request interceptor for logging
+// Request interceptor for logging and token injection
 api.interceptors.request.use(
   (config) => {
     console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`);
+    
+    // Inject token from localStorage if available
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    
     return config;
   },
   (error) => {
@@ -44,7 +49,6 @@ export const getAllExperiments = (search = '', page = 1, limit = 20) => {
   params.append('limit', limit.toString());
   
   return api.get(`/experiments?${params}`);
-  headers: { Authorization: `Bearer ${token}` }
 };
 
 export const getExperimentById = (id) => {

@@ -14,7 +14,8 @@ import { ThemeProvider } from './context/ThemeContext';
 import Profile from './pages/Profile';
 import './App.css';
 import './styles/global.css';
-import './styles/DarkMode.css';
+import './styles/design-system.css'; // New Design System
+// import './styles/DarkMode.css'; // Replaced by design-system
 
 // Layout wrapper component for main app
 function MainLayout({ children }) {
@@ -35,22 +36,22 @@ function MainLayout({ children }) {
 function App() {
   return (
     <ThemeProvider>
-    <AuthProvider>
-      <Router>
-        <Routes>
-          {/* Auth routes (no layout) */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+      <AuthProvider>
+        <Router>
+          <Routes>
+            {/* Auth routes (no layout) */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-          {/* Main app routes (with layout) */}
-          <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-          <Route path="/experiment/:id" element={<MainLayout><ExperimentPage /></MainLayout>} />
-          <Route path="/about" element={<MainLayout><About /></MainLayout>} />
-          <Route path ="/leaderboard" element={<MainLayout><Leaderboard /></MainLayout>} />
-          <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+            {/* Main app routes (with layout) */}
+            <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+            <Route path="/experiment/:id" element={<MainLayout><ExperimentPage /></MainLayout>} />
+            <Route path="/about" element={<MainLayout><About /></MainLayout>} />
+            <Route path="/leaderboard" element={<MainLayout><Leaderboard /></MainLayout>} />
+            <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -38,7 +38,10 @@ router.post('/complete', authMiddleware, async (req, res) => {
 
     console.log('✅ User found:', user.username, 'Current points:', user.points);
 
-    if (user.completedExperiments.includes(experimentId)) {
+    // Check if already completed (handle both ObjectId and String comparisons)
+    const isCompleted = user.completedExperiments.some(id => id.toString() === experimentId);
+
+    if (isCompleted) {
       console.log('⚠️ Already completed');
       return res.json({ message: 'Already completed', points: user.points });
     }
