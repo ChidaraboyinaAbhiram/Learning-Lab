@@ -36,8 +36,8 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Contact</h4>
           <ul>
-            <li>📧 support@learninglab.com</li>
-            <li>📞 +91 12345 67890</li>
+            <li>📧 abhiram092004@gmail.com </li>
+            <li>📞 +91 6301487658</li>
             <li>🌐 <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             <li>💼 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
           </ul>
